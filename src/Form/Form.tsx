@@ -1,7 +1,13 @@
 import { useForm } from "react-hook-form";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import { Button, Container, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setAcidA, setAcidB, resetForm, setLoading } from "../store/formSlise";
+import {
+  resetForm,
+  setAcidA,
+  setAcidB,
+  setLoading,
+  setError,
+} from "../store/formSlise";
 import { RootState } from "../store";
 
 type FormData = {
@@ -17,6 +23,7 @@ export const Form = () => {
     reset,
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     mode: "onBlur",
@@ -25,18 +32,30 @@ export const Form = () => {
 
   const onSubmit = async (data: FormData) => {
     dispatch(setLoading(true));
-
     dispatch(setAcidA(data.acidA));
     dispatch(setAcidB(data.acidB));
-    dispatch(resetForm());
-    reset();
+
+    setValue("acidA", data.acidA);
+    setValue("acidB", data.acidB);
+
     dispatch(setLoading(false));
   };
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Визуализация выравнивания
+      <Typography
+        padding={{ xs: "5%", sm: 0 }}
+        gutterBottom
+        sx={{
+          fontSize: {
+            xs: "1.5rem",
+            sm: "1.75rem",
+            md: "2.125rem",
+          },
+          fontWeight: 600,
+        }}
+      >
+        Визуализация выравнивания аминокислотных последовательностей
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
@@ -45,17 +64,24 @@ export const Form = () => {
           margin="normal"
           {...register("acidA", {
             required: "Поле обязательно для заполнения",
+            onChange: (e) => {
+              const upperLiterA = e.target.value.toUpperCase();
+              setValue("acidA", upperLiterA);
+            },
           })}
           error={!!errors.acidA}
           helperText={errors.acidA?.message}
         />
-
         <TextField
           fullWidth
           label="acidB"
           margin="normal"
           {...register("acidB", {
             required: "Поле обязательно для заполнения",
+            onChange: (e) => {
+              const upperLiterB = e.target.value.toUpperCase();
+              setValue("acidB", upperLiterB);
+            },
           })}
           error={!!errors.acidB}
           helperText={errors.acidB?.message}
@@ -66,7 +92,7 @@ export const Form = () => {
           color="primary"
           sx={{ mt: 2 }}
         >
-          Submit
+          Сравнить
         </Button>
       </form>
     </Container>

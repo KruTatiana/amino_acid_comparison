@@ -17,16 +17,25 @@ export const ResultItem = ({ index, elementA, arrB }: ResultItemProps) => {
   }
 
   return (
-    <Grid key={`A-${index}`}>
+    <Grid marginTop={"5px"} key={`A-${index}`}>
       <Typography
         sx={{
           border: 1,
           backgroundColor: ColorsEnum[elementA as keyof typeof ColorsEnum],
+          fontSize: 24,
+          padding: "12px",
         }}
       >
         {elementA}
       </Typography>
-      <Typography sx={{ border: 1, backgroundColor: colorB }}>
+      <Typography
+        sx={{
+          border: 1,
+          backgroundColor: colorB,
+          fontSize: 24,
+          padding: "12px",
+        }}
+      >
         {arrB[index]}
       </Typography>
     </Grid>

@@ -6,7 +6,6 @@ export interface FormState {
   arrA: string[];
   arrB: string[];
   isLoading: boolean;
-  isAcidALonger: boolean | null;
   error: string | null;
   validateValue: { acidA: string; acidB: string } | null;
 }
@@ -17,7 +16,6 @@ const initialState: FormState = {
   arrA: [],
   arrB: [],
   isLoading: false,
-  isAcidALonger: null,
   error: null,
   validateValue: null,
 };
@@ -26,18 +24,12 @@ const checkLength = (state: FormState) => {
   const lengthA = state.acidA.length;
   const lengthB = state.acidB.length;
 
-  if (lengthA > lengthB) {
-    state.isAcidALonger = true;
-  } else if (lengthA < lengthB) {
-    state.isAcidALonger = false;
-  } else {
-    state.isAcidALonger = null;
-  }
-
   if (lengthA !== lengthB) {
-    state.error = "длины последовательностей неравны";
+    state.error = "Длины последовательностей неравны";
+    state.validateValue = null;
   } else {
     state.error = null;
+    state.validateValue = { acidA: state.acidA, acidB: state.acidB };
   }
 };
 
@@ -58,13 +50,17 @@ const counterSlice = createSlice({
     setLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
     resetForm(state) {
       state.acidA = "";
       state.acidB = "";
+      state.error = null;
     },
   },
 });
 
-export const { setAcidA, setAcidB, setLoading, resetForm } =
+export const { setAcidA, setAcidB, setLoading, setError, resetForm } =
   counterSlice.actions;
 export default counterSlice.reducer;
