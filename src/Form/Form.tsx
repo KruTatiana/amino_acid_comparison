@@ -64,6 +64,10 @@ export const Form = () => {
           margin="normal"
           {...register("acidA", {
             required: "Поле обязательно для заполнения",
+            pattern: {
+              value: /^[ARNDCEQGHILKMFPSTWYV-]+$/,
+              message: "Не корректный ввод данных",
+            },
             onChange: (e) => {
               const upperLiterA = e.target.value.toUpperCase();
               setValue("acidA", upperLiterA);
@@ -78,6 +82,10 @@ export const Form = () => {
           margin="normal"
           {...register("acidB", {
             required: "Поле обязательно для заполнения",
+            pattern: {
+              value: /^[ARNDCEQGHILKMFPSTWYV-]+$/,
+              message: "Не корректный ввод данных",
+            },
             onChange: (e) => {
               const upperLiterB = e.target.value.toUpperCase();
               setValue("acidB", upperLiterB);
