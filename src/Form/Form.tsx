@@ -1,14 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  resetForm,
-  setAcidA,
-  setAcidB,
-  setLoading,
-  setError,
-} from "../store/formSlise";
+import { resetForm, setAcidA, setAcidB, setLoading } from "../store/formSlise";
 import { RootState } from "../store";
+import { useEffect } from "react";
 
 type FormData = {
   acidA: string;
@@ -17,7 +12,7 @@ type FormData = {
 
 export const Form = () => {
   const dispatch = useDispatch();
-  const { acidA, acidB } = useSelector((state: RootState) => state.form);
+  const { acidA, acidB, error } = useSelector((state: RootState) => state.form);
 
   const {
     reset,
@@ -38,7 +33,14 @@ export const Form = () => {
     setValue("acidA", data.acidA);
     setValue("acidB", data.acidB);
 
+    const lengthValid = data.acidA.length === data.acidB.length;
+
     dispatch(setLoading(false));
+
+    if (lengthValid) {
+      reset();
+      dispatch(resetForm());
+    }
   };
 
   return (
