@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "start": "npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/KruTatiana/amino_acid_comparison/issues"
   },
-  "homepage": "https://github.com/KruTatiana/amino_acid_comparison#readme",
+  "homepage": "https://KruTatiana.github.io/amino_acid_comparison",
   "description": "",
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.3",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.3",
